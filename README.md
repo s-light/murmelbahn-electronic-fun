@@ -1,6 +1,9 @@
 # murmelbahn electronic fun
 collection of examples for marble-runs with electronic things..
 
+![./media/20250831_144952-cut-640x360.av](media/20250831_144952-cut-640x360-30.avif)
+
+
 ## Material (HW)
 
 - controller [CYTRON MAKER PI RP2040](https://github.com/CytronTechnologies/MAKER-PI-RP2040) ([digikey.de](https://www.digikey.de/en/products/detail/cytron-technologies-sdn-bhd/MAKER-PI-RP2040/14557836))
@@ -20,6 +23,8 @@ collection of examples for marble-runs with electronic things..
 [Circuitpython for controller `cytron maker pi RP2040`](https://circuitpython.org/board/cytron_maker_pi_rp2040/)
 
 [cytron cp examples for `maker pi RP2040`](https://github.com/CytronTechnologies/MAKER-PI-RP2040/tree/main/Examples/CircuitPython)
+
+[simple led animations](https://learn.adafruit.com/circuitpython-led-animations/basic-animations)
 
 ## origin
 this project and *Workshop*-Material was first collected for the [`Make Your School MakerFestival 2025`](https://www.makeyourschool.de/maker-festival/)
