@@ -7,7 +7,6 @@ import time
 import board
 
 import usb_cdc
-
 dataio = usb_cdc.data
 
 import keypad
@@ -41,12 +40,6 @@ sensor = adafruit_tcs34725.TCS34725(i2c, address=0x29)
 
 sensor_debounce_start = time.monotonic()
 
-from ExponentialMovingAverage import ExponentialMovingAverage
-
-ema_filter = ExponentialMovingAverage(alpha=0.7)
-
-event_threshold = 2
-
 # servo setup
 import pwmio
 from adafruit_motor import servo
@@ -62,8 +55,6 @@ SERVO_POS_RIGHT = 10
 import neopixel
 from adafruit_led_animation.animation.comet import Comet
 from adafruit_led_animation.color import PURPLE
-
-pixels = neopixel.NeoPixel(board.GP18, 2)
 
 num_leds = 20
 pixels_left = neopixel.NeoPixel(board.GP14, num_leds, brightness=0.5, auto_write=False)
@@ -82,7 +73,6 @@ comet_right = Comet(
     color=PURPLE,
     tail_length=10,
 )
-
 
 def comet_stop(animation):
     if animation.cycle_count >= 2:
@@ -111,15 +101,29 @@ gate_pos_old = RIGHT
 
 print("murmelbahn-electronic-fun - main.py")
 
-def gate_activate():
-    global gate_pos
+
+def gate_left_activate():
+    servo1.angle = SERVO_POS_LEFT
+    comet_left.resume()
+    pixels_right.fill(COLOR_STANDBY)
+    pixels_right.show()
+
+
+def gate_right_activate():
+    global animation
+    servo1.angle = SERVO_POS_RIGHT
+    animation.pixels.fill(COLOR_STANDBY)
+    animation.pixels.show()
+    animation = comet_left
+    comet_right.resume()
+
+
+def gate_switch():
     if gate_pos == LEFT:
-        servo1.angle = SERVO_POS_LEFT
-        animation = comet_right
+        gate_left_activate()
     elif gate_pos == RIGHT:
-        servo1.angle = SERVO_POS_RIGHT
-        animation = comet_left
-    animation.resume()
+        gate_right_activate()
+    time.sleep(0.1)
 
 
 def gate_toggle():
@@ -151,20 +155,16 @@ def main():
         if event.key_number == 3:
             gate_pos = LEFT
 
-    color_raw = sensor.color_raw
-    color_filtered = ema_filter.update(color_raw)
-    if color_filtered[3] > event_threshold:
-        if ((time.monotonic() - sensor_debounce_start) > 1.0):
-            sensor_debounce_start = time.monotonic()
-            print("ping! murmel erkannt!")
-            gate_toggle()
 
-    dataio.write(
-        f"{color_raw[0]};{color_raw[1]};{color_raw[2]};{color_raw[3]};{color_filtered[3]:.2f};{0};{0};\n"
-    )
+    value = sensor.color_raw[3]
+    if ((time.monotonic() - sensor_debounce_start) > 1.0) and value > 13:
+        sensor_debounce_start = time.monotonic()
+        print("ping! murmel erkannt!")
+        gate_toggle()
+    print(f"{value};{10+ gate_pos*10};")
 
     if gate_pos_old is not gate_pos:
-        gate_activate()
+        gate_switch()
         gate_pos_old = gate_pos
 
     comet_left.animate()
