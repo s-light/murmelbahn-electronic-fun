@@ -14,10 +14,10 @@ num_leds = 20
 palette = [
     fancy.CRGB(1.0, 0.0, 0.0),  # Red
     fancy.CRGB(0.5, 0.5, 0.0),  # Yellow
-    fancy.CRGB(0.0, 1.0, 0.0),  # Green
-    fancy.CRGB(0.0, 0.5, 0.5),  # Cyan
-    fancy.CRGB(0.0, 0.0, 1.0),  # Blue
-    fancy.CRGB(0.5, 0.0, 0.5),  # Magenta
+    # fancy.CRGB(0.0, 1.0, 0.0),  # Green
+    # fancy.CRGB(0.0, 0.5, 0.5),  # Cyan
+    # fancy.CRGB(0.0, 0.0, 1.0),  # Blue
+    # fancy.CRGB(0.5, 0.0, 0.5),  # Magenta
 ]
 
 # Declare a NeoPixel object on pin D6 with num_leds pixels, no auto-write.
@@ -32,9 +32,9 @@ while True:
         # Load each pixel's color from the palette using an offset, run it
         # through the gamma function, pack RGB value and assign to pixel.
         color = fancy.palette_lookup(palette, offset + i / num_leds)
-        color = fancy.gamma_adjust(color, brightness=0.25)
+        color = fancy.gamma_adjust(color, brightness=0.9)
         pixels1[i] = color.pack()
         pixels2[i] = color.pack()
     pixels1.show()
     pixels2.show()
-    offset += 0.03  # Bigger number = faster spin
+    offset += 0.001  # Bigger number = faster spin
