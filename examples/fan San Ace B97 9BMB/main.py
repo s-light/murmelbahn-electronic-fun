@@ -6,14 +6,14 @@ import pwmio
 
 print("example: fan San Ace B97 9BMB (9BMB12P2K01)")
 # datasheet:
-# /home/stefan/mydata/parts_info/San Ace SanyoDenki/San Ace B97 9BMB/9BMB12P2K01 details.md
+# 9BMB12P2K01 details.md (in this folder)
 
 # analog input (potentiometer) on GP27 / A1 sets the speed
 pot = analogio.AnalogIn(board.GP27)
 
 # fan PWM input: 25kHz.
 # PWM line is driven through an inverting BC547C NPN stage
-# (see san_ace_fan_rp2040_summary.md): GPIO high = fan PWM line low.
+# (GPIO high = fan PWM line low, so the duty is inverted in software).
 PWM_INVERT = True
 PWM_FREQUENCY = 25000
 # datasheet: operate at 20% duty or above; 0% = stop.
