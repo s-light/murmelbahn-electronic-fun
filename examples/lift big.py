@@ -4,7 +4,7 @@ import digitalio
 import pwmio
 from adafruit_motor import servo
 
-print("example: servo.py")
+print("example: servo_big.py")
 
 
 import keypad
@@ -18,11 +18,13 @@ keys = keypad.Keys(
         board.GP2,
         board.GP3,
         # End-Stop Bottom
-        # board.GP4, # NO
-        board.GP5,  # NC
+        # GROVE 3
+        board.GP5,
         # End-Stop TOP
-        # board.GP16, # NO
-        board.GP17,  # NC
+        # GROVE 4
+        board.GP17,
+        # # board.GP16, # NO
+        # board.GP17,  # NC
     ),
     value_when_pressed=False,
     pull=True,
@@ -63,12 +65,17 @@ def handleButtons():
     event = keys.events.get()
     if event and event.pressed:
         # angle_target = angle
-        if event.key_number == BOARD_GP20:
-            print("motor +")
-            motor1.throttle = 0.5
-        if event.key_number == BOARD_GP21:
-            print("motor -")
-            motor1.throttle = -0.5
+        if event.key_number == BOARD_GP20 or event.key_number == GROVE_DUAL_2:
+            print("up")
+            motor1.throttle = 1.0
+            print("up slow")
+            motor1.throttle = 0.6
+        if event.key_number == BOARD_GP21 or event.key_number == GROVE_DUAL_1:
+            print("down")
+            motor1.throttle = -1.0
+            time.sleep(0.1)
+            print("down slow")
+            motor1.throttle = -1.0
         # Limit the angle from 0 to 180 degrees.
         # if angle_target > 180:
         #     angle_target = 180
@@ -76,17 +83,21 @@ def handleButtons():
         #     angle_target = 0
 
         #  DUAL BUTTON
-        if event.key_number == GROVE_DUAL_2:
-            print("ping")
-            # angle_target = SERVO_POS_TOP
+        # if event.key_number == GROVE_DUAL_2:
+        #     print("ping")
+        # angle_target = SERVO_POS_TOP
         # if event.key_number == 3:
         #     angle_target = SERVO_POS_RIGHT
 
         if event.key_number == ENDSTOP_BOTTOM:
             print("ENDSTOP_BOTTOM")
+            motor1.throttle = 1.0
+            time.sleep(0.02)
             motor1.throttle = 0
         if event.key_number == ENDSTOP_TOP:
             print("ENDSTOP_TOP")
+            motor1.throttle = -1.0
+            time.sleep(0.02)
             motor1.throttle = 0
 
     #  while angle != angle_target:

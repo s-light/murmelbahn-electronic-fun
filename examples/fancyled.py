@@ -8,7 +8,7 @@ import neopixel
 
 import adafruit_fancyled.adafruit_fancyled as fancy
 
-num_leds = 20
+num_leds = !
 
 # Declare a 6-element RGB rainbow palette
 palette = [
