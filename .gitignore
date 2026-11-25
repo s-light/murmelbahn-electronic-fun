@@ -177,4 +177,8 @@ cython_debug/
 .pypirc
 
 
-!CIRCUITPY_disc/lib/
+!common/lib/
+!/parts/
+
+# FreeCAD backup files
+*.FCBak
