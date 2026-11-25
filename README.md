@@ -26,6 +26,7 @@ collection of examples for marble-runs with electronic things..
 | [`parts/fan-san-ace-b97`](parts/fan-san-ace-b97) | PWM fan with speed control and tacho |
 | [`parts/led-effects`](parts/led-effects) | pixel LED animations |
 | [`parts/lift`](parts/lift) | marble lift |
+| [`parts/light-barrier`](parts/light-barrier) | detect a rolling marble, direction and speed |
 | [`parts/marble-dispenser`](parts/marble-dispenser) | marble dispenser (CAD) |
 | [`parts/marble-reaction`](parts/marble-reaction) | react on a marble: color sensor, gate servo, LEDs |
 | [`parts/qtr-hd-02a-raw`](parts/qtr-hd-02a-raw) | reflectance sensor raw values |
